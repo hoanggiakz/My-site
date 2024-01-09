@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Uploader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        #upload-container {
+            margin: 20px;
+        }
+
+        #uploaded-image {
+            max-width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Image Uploader</h1>
+
+    <div id="upload-container">
+        <input type="file" accept=".jpg" id="image-input" onchange="previewImage()">
+        <div id="preview-container"></div>
+    </div>
+
+    <script>
+        function previewImage() {
+            const input = document.getElementById('image-input');
+            const previewContainer = document.getElementById('preview-container');
+            const uploadedImage = document.getElementById('uploaded-image');
+
+            while (previewContainer.firstChild) {
+                previewContainer.removeChild(previewContainer.firstChild);
+            }
+
+            const file = input.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = 'Uploaded Image';
+                    img.id = 'uploaded-image';
+                    previewContainer.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                uploadedImage.src = '';
+            }
+        }
+    </script>
+</body>
+
+</html>
